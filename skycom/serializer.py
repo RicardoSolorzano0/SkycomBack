@@ -12,9 +12,13 @@ class AlumnoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MateriaSerializer(serializers.ModelSerializer):
+    profesor_nombre = serializers.SerializerMethodField()
     class Meta:
         model = Materia
-        fields = '__all__'
+        fields = ["id", "nombre", "profesor", "profesor_nombre"]
+        
+    def get_profesor_nombre(self, obj):
+        return obj.profesor.nombre
 
 class NotaSerializer(serializers.ModelSerializer):
     class Meta:
