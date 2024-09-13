@@ -17,7 +17,7 @@ Es mas comodo hacerlo con las extensiones de visual studio llamada python, dando
 
 # Instala dependencias
 
-    pip install django djangorestframework django-cors-headers
+    pip install django djangorestframework django-cors-headers drf-yasg setuptools
 
 # Realiza migraciones
 
