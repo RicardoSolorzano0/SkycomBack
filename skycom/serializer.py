@@ -23,5 +23,16 @@ class MateriaSerializer(serializers.ModelSerializer):
 class NotaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Nota
-        fields = '__all__'
+        fields = ["id","alumno", "materia", "nota", "tipo_evaluacion"]
+
+    #validacion personalizada para limitar las notas por alumno y materia
+    def validate(self, data):
+        alumno= data["alumno"]
+        materia= data["materia"]
         
+        #contar cuantas notas existen ya para este alumno y materia
+        notas_existentes = Nota.objects.filter(alumno=alumno, materia=materia).count()
+        
+        if notas_existentes >= 3:
+            raise serializers.ValidationError("Ya existen 3 notas para este alumno y materia")
+        return data
