@@ -21,9 +21,18 @@ class MateriaSerializer(serializers.ModelSerializer):
         return obj.profesor.nombre
 
 class NotaSerializer(serializers.ModelSerializer):
+    materia_nombre = serializers.SerializerMethodField()
+    alumno_nombre = serializers.SerializerMethodField()
+    
     class Meta:
         model = Nota
-        fields = ["id","alumno", "materia", "nota", "tipo_evaluacion"]
+        fields = ["id","alumno", "materia", "nota", "tipo_evaluacion", "materia_nombre", "alumno_nombre"]
+    
+    def get_materia_nombre(self, obj):
+        return obj.materia.nombre
+    
+    def get_alumno_nombre(self, obj):
+        return obj.alumno.nombre+" "+obj.alumno.apellido
 
     #validacion personalizada para limitar las notas por alumno y materia
     def validate(self, data):
